@@ -1,0 +1,22 @@
+https://www.websequencediagrams.com/
+title 0.4: uusi muistiinpano
+
+selain->palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+note over palvelin:
+palvelin kehottaa selainta tekemään HTTP GET kutsun /notes -endpointiin
+end note
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+palvelin->selain: HTML-koodi
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+palvelin->selain: main.js
+
+note over selain:
+selain suorittaa main.js-koodin, joka pyytää JSON-datan palvelimelta
+end note
+
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+palvelin->selain: JSON-data
+
+note over selain:
+selain suorittaa callbackin joka renderöi datan selaimeen
+end note
