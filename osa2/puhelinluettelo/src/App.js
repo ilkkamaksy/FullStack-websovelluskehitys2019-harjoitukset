@@ -62,7 +62,7 @@ const App = () => {
       contactService
       .create(newPerson)
       .then(response => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             setPersons(persons.concat(response.data));
             setNotice(`Added ${newPerson.name}`, "success")
           }
