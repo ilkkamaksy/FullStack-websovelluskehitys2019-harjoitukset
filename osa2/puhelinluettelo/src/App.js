@@ -50,15 +50,10 @@ const App = () => {
     }
 
     // Check if the name exists in phonebook
-    const nameExists = persons.reduce((acc, curr) => {
-      if (curr.name === newName) {
-        return true;
-      } 
-      return false; 
-    }, persons[0]); 
+    const nameExists = persons.filter(person => person.name === newName);
     
     // Add name to phonebook if it doesn't exist
-    if ( !nameExists ) {
+    if ( nameExists.length === 0 ) {
       contactService
       .create(newPerson)
       .then(response => {
@@ -68,8 +63,7 @@ const App = () => {
           }
       })
       .catch(error => {
-        
-        setNotice(`We've encountered an error while updating phonebook: ${error}`, "error")
+        setNotice(`error ${error.response.status}: ${error.response.data.error}`, "error")
 
       });
 
@@ -97,7 +91,7 @@ const App = () => {
         })
         .catch(error => {
 
-          setNotice(`We've encountered an error while updating phonebook: ${error}`, "error");
+          setNotice(`error ${error.response.status}: ${error.response.data.error}`, "error")
           
         })
 
@@ -112,14 +106,15 @@ const App = () => {
     if ( window.confirm(`Delete ${personToDelete.name}?`) ) {
       contactService.delete(personToDelete.id)
       .then(response => {
-        if ( response.status === 200) {
+        
+        if ( response.status === 204) {
           setPersons(persons.filter(person => person.id !== personToDelete.id));
           setNotice(`${personToDelete.name} has been deleted`, "success")
         }
       })
       .catch(error => {
 
-        setNotice(`We've encountered an error while removing contacts: ${error}`, "error")
+        setNotice(`error ${error.response.status}: ${error.response.data.error}`, "error")
         
       })
     }
